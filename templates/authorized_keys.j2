@@ -1,0 +1,12 @@
+# This file is managed by Ansible
+#
+# See: git@github.com:ffbsee/ansible.git
+#
+# * DO NOT EDIT *
+#
+{% for admin in admins|sort %}
+# {{ admin }}
+{% for keyfile in lookup('fileglob', 'admin_ssh_keys/{}_*.pub'.format(admin), wantlist=True) %}
+{{ lookup('file', keyfile) }}
+{% endfor %}
+{% endfor %}
