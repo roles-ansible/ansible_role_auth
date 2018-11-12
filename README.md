@@ -13,6 +13,7 @@ admins:
   - mart
   - l3d
 
+admin_ssh_keys: 'admin_ssh_keys'
 ```
 ```
 /files/admin_ssh_keys/mart_id.pub

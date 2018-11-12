@@ -41,7 +41,7 @@
 
 - name: Add ssh keys for admin users to their users
   copy:
-    src: 'files/admin_ssh_keys/{{ item }}_id.pub'
+    src: 'files/{{ admin_ssh_keys }}/{{ item }}_id.pub'
     dest: '/home/{{ item }}/.ssh/authorized_keys'
     owner: '{{ item }}'
     group: admins
