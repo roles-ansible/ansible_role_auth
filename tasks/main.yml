@@ -1,5 +1,4 @@
 ---
-
 - name: Create .ssh directory for root
   file:
     path: '/root/.ssh'

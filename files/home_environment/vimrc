@@ -1,0 +1,9 @@
+" Von Ansible Verwaltet!
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set fileencoding=utf-8
+set encoding=utf-8
+colorscheme elflord
+syntax on
+
