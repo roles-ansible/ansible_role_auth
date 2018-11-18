@@ -80,6 +80,13 @@
     group: admins
     mode: 'u=rw,g=r,o='
 
+- name: Create /etc/sudoers.d directory
+  file:
+    path: '/etc/sudoers.d'
+    state: directory
+    owner: root
+    group: root
+    mode: 'u=rwx,g=,o='
 
 - name: Copy sudoers file
   copy:
