@@ -86,7 +86,7 @@
     state: directory
     owner: root
     group: root
-    mode: 'u=rwx,g=,o='
+    mode: 'u=rwx,g=x,o=x'
 
 - name: Copy sudoers file
   copy:
