@@ -6,6 +6,7 @@
     owner: root
     group: root
     mode: 'u=rwx,g=,o='
+  become: yes
 
 - name: Add ssh keys for admin users to user root
   template:
@@ -14,12 +15,13 @@
     owner: root
     group: root
     mode: 'u=rw,g=,o='
-
+  become: yes
 
 - name: Add admin group
   group:
     name: 'admins'
     state: present
+  become: yes
 
 - name: Add admin users
   user:
@@ -28,6 +30,7 @@
     groups: 'admins'
     append: yes
   with_items: '{{ admins }}'
+  become: yes
 
 - name: Create .ssh directory for all admin users
   file:
@@ -37,6 +40,7 @@
     group: admins
     mode: 'u=rwx,g=,o='
   with_items: '{{ admins }}'
+  become: yes
 
 - name: Add ssh keys for admin users to their users
   copy:
@@ -46,7 +50,7 @@
     group: admins
     mode: 'u=rw,g=,o='
   with_items: '{{ admins }}'
-
+  become: yes
 
 - name: Add ansible user
   user:
@@ -54,6 +58,7 @@
     shell: '/bin/bash'
     groups: 'admins'
     append: yes
+  become: yes
 
 - name: Create .ssh directory for user ansible
   file:
@@ -62,6 +67,7 @@
     owner: ansible
     group: admins
     mode: 'u=rwx,g=,o='
+  become: yes
 
 - name: Add ssh keys for admins to user ansible
   template:
@@ -70,7 +76,7 @@
     owner: ansible
     group: admins
     mode: 'u=rw,g=,o='
-
+  become: yes
 
 - name: Copy .bashrc for user ansible
   copy:
@@ -79,6 +85,7 @@
     owner: ansible
     group: admins
     mode: 'u=rw,g=r,o='
+  become: yes
 
 - name: Create /etc/sudoers.d directory
   file:
@@ -87,6 +94,7 @@
     owner: root
     group: root
     mode: 'u=rwx,g=x,o=x'
+  become: yes
 
 - name: Copy sudoers file
   copy:
@@ -95,3 +103,5 @@
     owner: root
     group: root
     mode: 'u=r,g=r,o='
+  become: yes
+
