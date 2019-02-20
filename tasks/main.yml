@@ -1,12 +1,12 @@
 ---
 - name: Create .ssh directory for root
+  become: yes
   file:
     path: '/root/.ssh'
     state: directory
     owner: root
     group: root
     mode: 'u=rwx,g=,o='
-  become: yes
 
 - name: Add ssh keys for admin users to user root
   template:
