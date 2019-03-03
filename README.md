@@ -15,7 +15,7 @@ admins:
   - l3d
 
 # all non-admins of this host
-users:
+user:
   - franz
 
 # all ssh keys for all admins and users

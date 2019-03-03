@@ -37,8 +37,8 @@
     name: '{{ item}}'
     state: present
   become: yes
-  with_items: '{{ users }}'
-  when: users is defined
+  with_items: '{{ user }}'
+  when: user is defined
 
 
 - name: Add non admin users
@@ -48,8 +48,8 @@
     shell: '/bin/bash'
     groups: '{{ item }}'
     append: yes
-  with_items: '{{ users }}'
-  when: users is defined
+  with_items: '{{ user }}'
+  when: user is defined
 
 - name: Create .ssh directory for all admin users
   file:
@@ -60,6 +60,28 @@
     mode: 'u=rwx,g=,o='
   with_items: '{{ admins }}'
   become: yes
+
+- name: Create .ssh directory for non admin users
+  file:
+    path: '/home/{{ item }}/.ssh'
+    state: directory
+    owner: '{{ item }}'
+    group: '{{ item }}'
+    mode: 'u=rwx,g=,o='
+  with_items: '{{ user }}'
+  become: yes
+
+
+- name: Add ssh keys for non admin users to their user
+  copy:
+    src: 'files/{{ admin_ssh_keys }}/{{ item }}_id.pub'
+    dest: '/home/{{ item }}/.ssh/authorized_keys'
+    owner: '{{ item }}'
+    group: admins
+    mode: 'u=rw,g=,o='
+  with_items: '{{ user }}'
+  become: yes
+
 
 - name: Add ssh keys for admin users to their users
   copy:
