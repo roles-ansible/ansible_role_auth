@@ -9,10 +9,16 @@ Ansible Rolle für die SSH Keys
 ```bash
 /host_vars/gw01.ffbsee.net
 --------------------------
+# all admins of this host
 admins:
   - mart
   - l3d
 
+# all non-admins of this host
+users:
+  - franz
+
+# all ssh keys for all admins and users
 admin_ssh_keys: 'admin_ssh_keys'
 ```
 ```

@@ -32,6 +32,25 @@
   with_items: '{{ admins }}'
   become: yes
 
+- name: Add individual group
+  group:
+    name: '{{ item}}'
+    state: present
+  become: yes
+  with_items: '{{ users }}'
+  when: users is defined
+
+
+- name: Add non admin users
+  become: yes
+  user:
+    name: '{{ item }}'
+    shell: '/bin/bash'
+    groups: '{{ item }}'
+    append: yes
+  with_items: '{{ users }}'
+  when: users is defined
+
 - name: Create .ssh directory for all admin users
   file:
     path: '/home/{{ item }}/.ssh'
