@@ -8,17 +8,17 @@ Ansible Rolle to setup users and deploy your ssh keys
  Variables
 ---------
 
-* ``admins`` (default ``[]``):
+* ``admins`` (default ``[]``):<br/>
   A list of ``ssh`` keys allowed to log in as `root`.
 
-* ``accounts`` (defailt ``[]``):
+* ``accounts`` (defailt ``[]``):<br/>
   A list of usernames theat will be created on this host, if they don't exisit
 
-* `users` (default `{}`):
+* `users` (default `{}`):<br/>
   A dict of user names mapping to lists of ``ssh`` keys
   allowed to log in to the given user account.
 
-* ``ssh_public_key_store`` (default ``ssh_public_keys``):
+* ``ssh_public_key_store`` (default ``ssh_public_keys``):<br/>
   A directory path where the public key files can be found by ansible.
 
 
@@ -63,7 +63,15 @@ eve@device1_id25519.pub
 eve@device2_id25519.pub
 ```
 
- Generate ed25519 Certificate
+Alice, Bob and Eve want to be users on this host:
+```
+accounts:
+  - alice
+  - bob
+  - eve
+```
+
+ Generate ed25519 SSH Keys
 --------------------------------
 
 ```bash
