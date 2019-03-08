@@ -1,12 +1,9 @@
-# This file is managed by Ansible
-#
-# See: git@github.com:ffbsee/ansible.git
-#
-# * DO NOT EDIT *
-#
-{% for admin in admins|sort %}
-# {{ admin }}
-{% for keyfile in lookup('fileglob', 'admin_ssh_keys/{}_*.pub'.format(admin), wantlist=True) %}
-{{ lookup('file', keyfile) }}
+# {{ ansible_managed }}
+
+{% for user_name in remote_users|sort %}
+# {{ user_name }}
+{% for keyfile in lookup('fileglob', '{}/{}_*.pub'.format(ssh_public_key_store, user_name), wantlist=True) %}
+no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="echo 'Please login as your own user rather than the user \"root\".';echo;sleep 10" {{ lookup('file', keyfile) }}
 {% endfor %}
 {% endfor %}
+

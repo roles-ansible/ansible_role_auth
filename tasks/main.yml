@@ -8,141 +8,118 @@
     group: root
     mode: 'u=rwx,g=,o='
 
-- name: Add ssh keys for admin users to user root
-  template:
-    src: 'authorized_keys.j2'
-    dest: '/root/.ssh/authorized_keys'
+- name: Add ssh keys for root 
+  become: yes
+  template:  
+    src: authorized_keys.j2
+    dest: /root/.ssh/authorized_keys
     owner: root
     group: root
-    mode: 'u=rw,g=,o='
-  become: yes
+    mode: "u=rw,g=,o="
+  vars:
+    local_user: 'root' 
+    remote_users: '{{ admins }}'
 
 - name: Add admin group
+  become: yes
   group:
     name: 'admins'
     state: present
-  become: yes
-
-- name: Add admin users
-  user:
-    name: '{{ item }}'
-    shell: '/bin/bash'
-    groups: 'admins'
-    append: yes
-  with_items: '{{ admins }}'
-  become: yes
 
 - name: Add individual group
+  become: yes
   group:
     name: '{{ item}}'
     state: present
-  become: yes
-  with_items: '{{ user }}'
-  when: user is defined
+  with_items: '{{ accounts }}'
 
-
-- name: Add non admin users
+- name: Add local users
   become: yes
   user:
     name: '{{ item }}'
     shell: '/bin/bash'
     groups: '{{ item }}'
     append: yes
-  with_items: '{{ user }}'
-  when: user is defined
+  with_items: '{{ accounts }}'
 
-- name: Create .ssh directory for all admin users
-  file:
-    path: '/home/{{ item }}/.ssh'
-    state: directory
-    owner: '{{ item }}'
-    group: admins
-    mode: 'u=rwx,g=,o='
-  with_items: '{{ admins }}'
+- name: Copy .bashrc for local users
   become: yes
-
-- name: Create .ssh directory for non admin users
-  file:
-    path: '/home/{{ item }}/.ssh'
-    state: directory
+  copy:
+    src: 'files/home_environment/bashrc'
+    dest: '/home/{{ item }}/.bashrc'
     owner: '{{ item }}'
     group: '{{ item }}'
-    mode: 'u=rwx,g=,o='
-  with_items: '{{ user }}'
-  become: yes
+    mode: 'u=rw,g=r,o='
+  with_items: '{{ accounts }}'
 
-
-- name: Add ssh keys for non admin users to their user
-  copy:
-    src: 'files/{{ admin_ssh_keys }}/{{ item }}_id.pub'
-    dest: '/home/{{ item }}/.ssh/authorized_keys'
-    owner: '{{ item }}'
-    group: admins
-    mode: 'u=rw,g=,o='
-  with_items: '{{ user }}'
-  become: yes
-
-
-- name: Add ssh keys for admin users to their users
-  copy:
-    src: 'files/{{ admin_ssh_keys }}/{{ item }}_id.pub'
-    dest: '/home/{{ item }}/.ssh/authorized_keys'
-    owner: '{{ item }}'
-    group: admins
-    mode: 'u=rw,g=,o='
-  with_items: '{{ admins }}'
-  become: yes
 
 - name: Add ansible user
+  become: yes
   user:
     name: 'ansible'
     shell: '/bin/bash'
     groups: 'admins'
     append: yes
-  become: yes
 
 - name: Create .ssh directory for user ansible
+  become: yes
   file:
     path: '/home/ansible/.ssh'
     state: directory
     owner: ansible
     group: admins
     mode: 'u=rwx,g=,o='
-  become: yes
 
 - name: Add ssh keys for admins to user ansible
-  template:
-    src: 'authorized_keys.j2'
-    dest: '/home/ansible/.ssh/authorized_keys'
-    owner: ansible
-    group: admins
-    mode: 'u=rw,g=,o='
   become: yes
+  template:  
+    src: authorized_keys.j2
+    dest: /root/.ssh/authorized_keys
+    owner: root
+    group: root
+    mode: "u=rw,g=,o="
+  vars:
+    local_user: 'ansible' 
+    remote_users: '{{ admins }}'
 
 - name: Copy .bashrc for user ansible
+  become: yes
   copy:
     src: 'files/home_environment/bashrc'
     dest: '/home/ansible/.bashrc'
     owner: ansible
     group: admins
     mode: 'u=rw,g=r,o='
-  become: yes
 
 - name: Create /etc/sudoers.d directory
+  become: yes
   file:
     path: '/etc/sudoers.d'
     state: directory
     owner: root
     group: root
     mode: 'u=rwx,g=x,o=x'
-  become: yes
 
 - name: Copy sudoers file
+  become: yes
   copy:
     src: 'files/home_environment/sudoers'
     dest: '/etc/sudoers.d/ansible'
     owner: root
     group: root
     mode: 'u=r,g=r,o='
+
+- name: adding existing user '{{ item }}' to group sudo
   become: yes
+  user:
+    name: '{{ item }}'
+    groups: sudo
+    append: yes
+  with_items: '{{ admins }}'
+
+- name: Setup local users ssh keys
+  include_tasks: ssh_user.yml 
+  with_dict: '{{ users }}' 
+  loop_control: 
+    loop_var: local_user_data
 
