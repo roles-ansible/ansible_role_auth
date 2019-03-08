@@ -1,35 +1,73 @@
  role-ssh_authorized_keys
 ==============================
 
-Ansible Rolle für die SSH Keys
+Ansible Rolle to setup users and deploy your ssh keys
 
- Beispiel Konfiguration:
-------------
+
+
+ Variables
+---------
+
+* ``admins`` (default ``[]``):
+  A list of ``ssh`` keys allowed to log in as `root`.
+
+* ``accounts`` (defailt ``[]``):
+  A list of usernames theat will be created on this host, if they don't exisit
+
+* `users` (default `{}`):
+  A dict of user names mapping to lists of ``ssh`` keys
+  allowed to log in to the given user account.
+
+* ``ssh_public_key_store`` (default ``ssh_public_keys``):
+  A directory path where the public key files can be found by ansible.
+
+
+ Files
+-----
+
+This role assumes that the *public* parts of all required ``ssh`` keys
+can be found within the directory ``ssh_public_key_store``. The file
+names must follow the convention: ``username_idalg.pub`` are are matched
+by the ``username`` part.
+
+
+ Examples
+--------
+
+Alice and Bob may log in and are allowed to become ``root`` with the ``sudo`` command on this host:
+
+```
+admins:
+  - alice
+  - bob
+```
+
+Alice, Bob and Eve may log in to ther own user accounts via ssh:
+```
+users:
+  alice:
+    - alice
+  eve:
+    - eve@device1
+    - eve@device2
+```
+Eve can do so with two different `ssh` keys. Alice only with his only SSH Key.
+
+
+The `files/ssh_public_keys/` contains the following files:
+
+```
+alice_id25519.pub
+bob_id25519.pub
+eve@device1_id25519.pub
+eve@device2_id25519.pub
+```
+
+ Generate ed25519 Certificate
+--------------------------------
 
 ```bash
-/host_vars/gw01.ffbsee.net
---------------------------
-# all admins of this host
-admins:
-  - mart
-  - l3d
-
-# all non-admins of this host
-user:
-  - franz
-
-# all ssh keys for all admins and users
-admin_ssh_keys: 'admin_ssh_keys'
-```
-```
-/files/admin_ssh_keys/mart_id.pub
---------------------------------
-SSH-Public Key
+ssh-keygen -t ed25519
 ```
 
-```
-/files/admin_ssh_keys/l3d_id.pub
---------------------------------
-SSH-Public Key
-```
 

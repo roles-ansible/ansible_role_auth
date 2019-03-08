@@ -1,3 +1,14 @@
----
 
-admin_ssh_keys: 'admin_ssh_keys'
+# Directory where the ssh public keys are stored
+# inside the ansible repository 
+ssh_public_key_store: 'ssh_public_keys'
+
+# all admins on this host
+admins: [] 
+
+# all users including their ssh keys, which may want to log in
+users: {}
+
+# all users who should be available on this host
+accounts: []
+
