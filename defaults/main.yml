@@ -12,3 +12,5 @@ users: {}
 # all users who should be available on this host
 accounts: []
 
+# SSH Login Warning
+ssh_root_login_warning: 'Please login as your own user rather than the user \"root\".'

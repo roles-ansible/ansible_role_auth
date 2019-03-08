@@ -3,7 +3,7 @@
 {% for user_name in remote_users|sort %}
 # {{ user_name }}
 {% for keyfile in lookup('fileglob', '{}/{}_*.pub'.format(ssh_public_key_store, user_name), wantlist=True) %}
-no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="echo 'Please login as your own user rather than the user \"root\".';echo;sleep 10" {{ lookup('file', keyfile) }}
+no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="echo '{{ ssh_root_login_warning }}';echo;sleep 10" {{ lookup('file', keyfile) }}
 {% endfor %}
 {% endfor %}
 

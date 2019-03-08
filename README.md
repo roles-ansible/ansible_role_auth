@@ -21,6 +21,7 @@ Ansible Rolle to setup users and deploy your ssh keys
 * ``ssh_public_key_store`` (default ``ssh_public_keys``):<br/>
   A directory path where the public key files can be found by ansible.
 
+For aditional variables please have a look into ``defaults/main.yml``!
 
  Files
 -----
