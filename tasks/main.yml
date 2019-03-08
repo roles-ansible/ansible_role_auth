@@ -52,6 +52,7 @@
     group: '{{ item }}'
     mode: 'u=rw,g=r,o='
   with_items: '{{ accounts }}'
+  when: home_sweet_home
 
 
 - name: Add ansible user
@@ -110,11 +111,11 @@
     group: root
     mode: 'u=r,g=r,o='
 
-- name: adding existing user '{{ item }}' to group sudo
+- name: adding existing user '{{ item }}' to group admins
   become: yes
   user:
     name: '{{ item }}'
-    groups: sudo
+    groups: admins
     append: yes
   with_items: '{{ admins }}'
 
