@@ -6,6 +6,8 @@ ssh_public_key_store: 'ssh_public_keys'
 # all admins on this host
 admins: [] 
 
+admins_ssh_root_prefix: "{{ admins }}"
+
 # all users including their ssh keys, which may want to log in
 users: {}
 

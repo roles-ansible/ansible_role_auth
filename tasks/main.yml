@@ -18,7 +18,7 @@
     mode: "u=rw,g=,o="
   vars:
     local_user: 'root' 
-    remote_users: '{{ admins }}'
+    remote_users: '{{ admins_ssh_root_prefix }}'
     restict_ssh_root_access: true
 
 - name: Add admin group
@@ -82,7 +82,7 @@
     mode: "u=rw,g=,o="
   vars:
     local_user: 'ansible' 
-    remote_users: '{{ admins }}'
+    remote_users: '{{ admins_ssh_root_prefix }}'
 
 - name: Copy .bashrc for user ansible
   become: yes
