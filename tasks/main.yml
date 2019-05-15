@@ -1,4 +1,7 @@
 ---
+- include_tasks: versioncheck.yml
+  when: submodules_versioncheck
+
 - name: Create .ssh directory for root
   become: yes
   file:
