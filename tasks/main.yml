@@ -1,6 +1,6 @@
 ---
 - include_tasks: versioncheck.yml
-  when: submodules_versioncheck
+  when: submodules_versioncheck|bool
 
 - name: Create .ssh directory for root
   become: yes
@@ -56,7 +56,7 @@
     group: '{{ item }}'
     mode: 'u=rw,g=r,o='
   with_items: '{{ accounts }}'
-  when: home_sweet_home
+  when: home_sweet_home|bool
 
 
 - name: Add ansible user
