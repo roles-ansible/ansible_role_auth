@@ -1,1 +1,4 @@
+---
 restict_ssh_root_access: False
+playbook_version_number: 103
+playbook_version_path: '/etc/ansible-version/users-and-ssh-keys_chaos-bodensee_github.com.version' 
