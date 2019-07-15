@@ -3,8 +3,10 @@
 {% for user_name in remote_users|sort %}
 # {{ user_name }}
 {% for keyfile in lookup('fileglob', '{}/{}*_*.pub'.format(ssh_public_key_store, user_name), wantlist=True) %}
-{% if restict_ssh_root_access %}no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="echo '{{ ssh_root_login_warning }}';echo;sleep 10" {%
-endif %}{{ lookup('file', keyfile) }}
+{% if restict_ssh_user_access -%}
+no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="echo '{{ ssh_root_login_warning }}';echo;sleep 10" 
+{%- endif -%}
+{{ lookup('file', keyfile) }}
 {% endfor %}
 {% endfor %}
 

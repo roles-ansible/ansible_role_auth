@@ -22,6 +22,7 @@
   vars:
     local_user: 'root'
     remote_users: '{{ admins_ssh_root_prefix }}'
+    restict_ssh_user_access: "{% if restict_ssh_root_access | bool %}true{% else %}false{% endif %}"
 
 - name: Add admin group
   become: yes
