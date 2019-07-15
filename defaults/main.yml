@@ -22,3 +22,6 @@ home_sweet_home: false
 
 # should we check the role version to prevent stupid users with outdated roles?
 submodules_versioncheck: true
+
+# restrict login as root
+restict_ssh_root_access: true
