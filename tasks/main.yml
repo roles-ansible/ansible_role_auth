@@ -58,7 +58,6 @@
   with_items: '{{ accounts }}'
   when: home_sweet_home|bool
 
-
 - name: Add ansible user
   become: yes
   user:
@@ -76,18 +75,6 @@
     group: admins
     mode: 'u=rwx,g=,o='
 
-- name: Add ssh keys for admins to user ansible
-  become: yes
-  template:
-    src: authorized_keys.j2
-    dest: /home/ansible/.ssh/authorized_keys
-    owner: ansible
-    group: ansible
-    mode: "u=rw,g=,o="
-  vars:
-    local_user: 'ansible'
-    remote_users: '{{ admins_ssh_root_prefix }}'
-
 - name: Copy .bashrc for user ansible
   become: yes
   copy:
@@ -96,6 +83,12 @@
     owner: ansible
     group: admins
     mode: 'u=rw,g=r,o='
+
+- name: Setup ssh keys for admins
+  include_tasks: ssh_root.yml
+  with_dict: '{{ users }}'
+  loop_control:
+    loop_var: local_user_data
 
 - name: Create /etc/sudoers.d directory
   become: yes
@@ -129,4 +122,3 @@
   with_dict: '{{ users }}'
   loop_control:
     loop_var: local_user_data
-
