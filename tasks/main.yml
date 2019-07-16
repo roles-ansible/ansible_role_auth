@@ -2,6 +2,9 @@
 - include_tasks: versioncheck.yml
   when: submodules_versioncheck|bool
 
+- include_tasks: delete_keys.yml
+  when: manage_all_keys | bool
+
 - name: Create .ssh directory for root
   become: yes
   file:
@@ -10,19 +13,6 @@
     owner: root
     group: root
     mode: 'u=rwx,g=,o='
-
-- name: Add ssh keys for root
-  become: yes
-  template:
-    src: authorized_keys.j2
-    dest: /root/.ssh/authorized_keys
-    owner: root
-    group: root
-    mode: "u=rw,g=,o="
-  vars:
-    local_user: 'root'
-    remote_users: '{{ admins_ssh_root_prefix }}'
-    restict_ssh_user_access: "{% if restict_ssh_root_access | bool %}true{% else %}false{% endif %}"
 
 - name: Add admin group
   become: yes

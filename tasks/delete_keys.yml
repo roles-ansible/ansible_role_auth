@@ -1,0 +1,12 @@
+---
+- name: delete root ssh keys
+  file:
+    state: absent
+    path: '/root/.ssh/authorized_keys'
+
+- name: delete ansible ssh keys
+  file:
+    state: absent
+    path: '/home/ansible/.ssh/authorized_keys'
+  ignore_errors: yes
+  failed_when: false
