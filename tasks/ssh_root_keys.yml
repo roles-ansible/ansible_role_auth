@@ -10,10 +10,10 @@
     state: present
     key: "{{ lookup('file', '{{ keys }}') }}"
 
-- name: Set authorized key "{{ ssh_user_data }}" for user ansible
+- name: Set authorized key "{{ ssh_user_data }}" for user root
   become: true
   authorized_key:
-    user: ansible
+    user: root
     state: present
     key: "{{ lookup('file', '{{ keys }}') }}"
     key_options: "no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command=\"echo '{{ ssh_root_login_warning }}';echo;sleep 10\"" 
