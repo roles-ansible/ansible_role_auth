@@ -64,6 +64,7 @@
     owner: ansible
     group: admins
     mode: 'u=rwx,g=,o='
+  changed_when: False
 
 - name: Copy .bashrc for user ansible
   become: yes
