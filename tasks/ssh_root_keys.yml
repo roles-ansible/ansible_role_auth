@@ -27,5 +27,4 @@
     user: root
     state: present
     key: "{{ lookup('file', '{{ keys }}') }}"
-    key_options: "no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command=\"echo '{{ ssh_root_login_warning }}';echo;sleep 10\""
   when: not restict_ssh_root_access | bool
