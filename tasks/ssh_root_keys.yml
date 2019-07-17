@@ -27,4 +27,5 @@
     user: root
     state: present
     key: "{{ lookup('file', '{{ keys }}') }}"
+  changed_when: False
   when: not restict_ssh_root_access | bool
