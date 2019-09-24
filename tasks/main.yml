@@ -81,6 +81,15 @@
   loop_control:
     loop_var: local_user_data
 
+- name: Set authorized key "{{ item }}" for user root
+  become: true
+  authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', '{{ item }}') }}"
+  when: grant_special_ssh_root_access | bool
+  with_items: "{{ root_ssh_keys }}"
+
 - name: Create /etc/sudoers.d directory
   become: yes
   file:
@@ -98,6 +107,7 @@
     owner: root
     group: root
     mode: 'u=r,g=r,o='
+    validate: /usr/sbin/visudo -cf %s
 
 - name: adding existing user '{{ item }}' to group admins
   become: yes

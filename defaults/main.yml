@@ -28,3 +28,10 @@ restict_ssh_root_access: true
 
 # manage all ssh keys
 manage_all_keys: true
+
+# add extra ssh keys to root user (not recomended)
+grant_special_ssh_root_access: false
+
+# list of xtra ssh root keys
+# the full path to the file is required!!!
+root_ssh_keys: []
