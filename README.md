@@ -1,8 +1,14 @@
- role-ssh_authorized_keys
+ role ssh_authorized_keys
 ==============================
+Ansible Rolle to manage and deploy ssh keys of admin and non-admin users
 
-Ansible Rolle to setup users and deploy your ssh keys
-
+ combinations
+---------------
+It is highly recomended to use this role together with a role to manage users and to manage the sshd configuration.<br/>
+The following roles are tested in combination and work well - at least for the user [DO1JLR](https://github.com/do1jlr):
+ - [github.com/chaos-bodensee/role-manage_users](https://github.com/chaos-bodensee/role-manage_users.git) *(will be created soon)*
+ - [github.com/chaos-bodensee/role-ssh_authorized_keys](https://github.com/chaos-bodensee/role-ssh_authorized_keys.git) *(this one)*
+ - [github.com/chaos-bodensee/role_sshd](https://github.com/chaos-bodensee/role_sshd.git)
 
 
  Variables
@@ -11,8 +17,8 @@ Ansible Rolle to setup users and deploy your ssh keys
 * ``admins`` (default ``[]``):<br/>
   A list of ``ssh`` keys allowed to log in as `root`.
 
-* ``accounts`` (defailt ``[]``):<br/>
-  A list of usernames theat will be created on this host, if they don't exisit
+* ``accounts`` (default ``[]``):<br/>
+  A list of usernames that will be created on this host, if they don't exisit
 
 * `users` (default `{}`):<br/>
   A dict of user names mapping to lists of ``ssh`` keys
