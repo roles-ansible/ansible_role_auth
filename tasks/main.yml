@@ -2,80 +2,16 @@
 - include_tasks: versioncheck.yml
   when: submodules_versioncheck|bool
 
+- name: Setup local users ssh keys
+  include_tasks: ssh_user.yml
+  with_dict: '{{ users }}'
+  loop_control:
+    loop_var: local_user_data
+
 - include_tasks: delete_keys.yml
   when: manage_all_keys | bool
 
-- name: Create .ssh directory for root
-  become: yes
-  file:
-    path: '/root/.ssh'
-    state: directory
-    owner: root
-    group: root
-    mode: 'u=rwx,g=,o='
-
-- name: Add admin group
-  become: yes
-  group:
-    name: 'admins'
-    state: present
-
-- name: Add individual group
-  become: yes
-  group:
-    name: '{{ item }}'
-    state: present
-  with_items: '{{ accounts }}'
-
-- name: Add local users
-  become: yes
-  user:
-    name: '{{ item }}'
-    shell: '/bin/bash'
-    groups: '{{ item }}'
-    append: no
-  with_items: '{{ accounts }}'
-  changed_when: false
-
-- name: Copy .bashrc for local users
-  become: yes
-  copy:
-    src: 'files/home_environment/bashrc'
-    dest: '/home/{{ item }}/.bashrc'
-    owner: '{{ item }}'
-    group: '{{ item }}'
-    mode: 'u=rw,g=r,o='
-  with_items: '{{ accounts }}'
-  when: home_sweet_home|bool
-
-- name: Add ansible user
-  become: yes
-  user:
-    name: 'ansible'
-    shell: '/bin/bash'
-    groups: 'admins'
-    append: yes
-
-- name: Create .ssh directory for user ansible
-  become: yes
-  file:
-    path: '/home/ansible/.ssh'
-    state: directory
-    owner: ansible
-    group: admins
-    mode: 'u=rwx,g=,o='
-  changed_when: False
-
-- name: Copy .bashrc for user ansible
-  become: yes
-  copy:
-    src: 'files/home_environment/bashrc'
-    dest: '/home/ansible/.bashrc'
-    owner: ansible
-    group: admins
-    mode: 'u=rw,g=r,o='
-
-- name: Setup ssh keys for admins
+- name: Setup ssh keys for admin users
   include_tasks: ssh_root.yml
   with_dict: '{{ users }}'
   loop_control:
@@ -89,37 +25,3 @@
     key: "{{ lookup('file', '{{ item }}') }}"
   when: grant_special_ssh_root_access | bool
   with_items: "{{ root_ssh_keys }}"
-
-- name: Create /etc/sudoers.d directory
-  become: yes
-  file:
-    path: '/etc/sudoers.d'
-    state: directory
-    owner: root
-    group: root
-    mode: 'u=rwx,g=x,o=x'
-
-- name: Copy sudoers file
-  become: yes
-  copy:
-    src: 'files/home_environment/sudoers'
-    dest: '/etc/sudoers.d/ansible'
-    owner: root
-    group: root
-    mode: 'u=r,g=r,o='
-    validate: /usr/sbin/visudo -cf %s
-
-- name: adding existing user '{{ item }}' to group admins
-  become: yes
-  user:
-    name: '{{ item }}'
-    groups: admins
-    append: yes
-  with_items: '{{ admins }}'
-  changed_when: false
-
-- name: Setup local users ssh keys
-  include_tasks: ssh_user.yml
-  with_dict: '{{ users }}'
-  loop_control:
-    loop_var: local_user_data

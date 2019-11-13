@@ -6,10 +6,16 @@ Ansible Rolle to manage and deploy ssh keys of admin and non-admin users
 ---------------
 It is highly recomended to use this role together with a role to manage users and to manage the sshd configuration.<br/>
 The following roles are tested in combination and work well - at least for the user [DO1JLR](https://github.com/do1jlr):
- - [github.com/chaos-bodensee/role-manage_users](https://github.com/chaos-bodensee/role-manage_users.git) *(will be created soon)*
+ - [github.com/chaos-bodensee/role-manage_users](https://github.com/chaos-bodensee/role-manage_users.git)
  - [github.com/chaos-bodensee/role-ssh_authorized_keys](https://github.com/chaos-bodensee/role-ssh_authorized_keys.git) *(this one)*
  - [github.com/chaos-bodensee/role_sshd](https://github.com/chaos-bodensee/role_sshd.git)
 
+```txt
+Protipp:
+
+Deploy the manage_users role *before* deploying the ssh keys.
+If the user does not exist it is hard to add a ssh key for him!
+```
 
  Variables
 ---------
@@ -84,5 +90,4 @@ accounts:
 ```bash
 ssh-keygen -t ed25519
 ```
-
 

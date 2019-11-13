@@ -6,6 +6,15 @@
     path: '/root/.ssh/authorized_keys'
   changed_when: False
 
+- name: Create .ssh directory for root
+  become: yes
+  file:
+    path: '/root/.ssh'
+    state: directory
+    owner: root
+    group: root
+    mode: 'u=rwx,g=,o='
+
 - name: delete ansible ssh keys
   become: true
   file:
@@ -14,3 +23,5 @@
   ignore_errors: yes
   failed_when: false
   changed_when: False
+
+
