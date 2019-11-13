@@ -13,8 +13,9 @@
     src: "/etc/ansible-version/{{ playbook_version_path }}"
   register: legacy_playbook_version
   when: submodules_versioncheck|bool
+  no_log: true
+  changed_when: false
   ignore_errors: yes
-  changed_when: False
 
 - name: check playbook version
   become: true
