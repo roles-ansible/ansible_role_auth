@@ -17,9 +17,6 @@ accounts: []
 # SSH Login Warning
 ssh_root_login_warning: 'Please login as your own user rather than the user \"root\".'
 
-# copy bashrc to all users
-home_sweet_home: false
-
 # should we check the role version to prevent stupid users with outdated roles?
 submodules_versioncheck: true
 

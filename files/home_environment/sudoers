@@ -1,6 +1,0 @@
-# Superrechte für die Gruppe Admins:
-# 
-# Verwaltet von ansbile
-#
-%admins ALL=NOPASSWD: ALL
- 
