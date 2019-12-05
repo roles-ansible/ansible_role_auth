@@ -11,6 +11,9 @@ admins_ssh_root_prefix: "{{ admins }}"
 # all users including their ssh keys, which may want to log in
 users: {}
 
+# user keys from github
+github_users: []
+
 # all users who should be available on this host
 accounts: []
 

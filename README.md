@@ -35,6 +35,8 @@ If the user does not exist it is hard to add a ssh key for him!
 
 For aditional variables please have a look into ``defaults/main.yml``!
 
+To add extra SSH Keys from github to a user use the ``github_users: {}`` settings
+
  Files
 -----
 
@@ -84,6 +86,12 @@ accounts:
   - eve
 ```
 
+Add ssh keys from github user ``DO1JLR`` for local user L3D
+```
+github_users:
+  l3d:
+    - do1jlr
+```
  Generate ed25519 SSH Keys
 --------------------------------
 

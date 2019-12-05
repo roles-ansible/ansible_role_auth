@@ -8,6 +8,12 @@
   loop_control:
     loop_var: local_user_data
 
+- name: Setup local users ssh keys from github
+  include_tasks: github_user.yml
+  with_dict: '{{ github_users }}'
+  loop_control:
+    loop_var: local_user_data
+
 - include_tasks: delete_keys.yml
   when: manage_all_keys | bool
 
