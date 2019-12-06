@@ -19,5 +19,6 @@
   authorized_key:
     user: '{{ local_user }}'
     state: present
-    key: 'https://github.com/{{ items }}.keys'
-  with_items: '{{ remote_users }}'
+    key: 'https://github.com/{{ item }}.keys'
+  with_items:
+   - "{{ remote_users }}"
