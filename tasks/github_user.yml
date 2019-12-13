@@ -14,7 +14,7 @@
     group: '{{ local_user }}'
     mode: 'u=rwx,g=,o='
 
-- name: 'Add ssh keys for user {{ local_user }}'
+- name: 'Add github ssh keys for user {{ local_user }}'
   become: yes
   authorized_key:
     user: '{{ local_user }}'
@@ -22,3 +22,16 @@
     key: 'https://github.com/{{ item }}.keys'
   with_items:
    - "{{ remote_users }}"
+  changed_when: False
+
+
+- name: 'Add github ssh keys for user ansible'
+  become: yes
+  authorized_key:
+    user: 'ansible'
+    state: present
+    key: 'https://github.com/{{ item }}.keys'
+  with_items:
+   - "{{ remote_users }}"
+  when: item in admins
+
