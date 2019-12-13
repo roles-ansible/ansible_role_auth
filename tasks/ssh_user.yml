@@ -13,8 +13,8 @@
     owner: '{{ local_user }}'
     group: '{{ local_user }}'
     mode: 'u=rwx,g=,o='
-  changed_when:
-    - github_users | length < 0
+  register: created_ssh_user_dir
+  changed_when: created_ssh_user_dir.changed and github_users | length == 0
 
 - name: 'Add ssh keys for user {{ local_user }}'
   become: yes
@@ -24,5 +24,5 @@
     owner: '{{ local_user }}'
     group: '{{ local_user }}'
     mode: 'u=rw,g=,o='
-  changed_when:
-    - github_users | length < 0
+  register: added_ssh_key_4_user
+  changed_when: github_users | length == 0 and added_ssh_key_4_user.changed
