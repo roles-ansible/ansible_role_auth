@@ -72,10 +72,10 @@ Eve can do so with two different `ssh` keys. Alice only with his only SSH Key.
 The `files/ssh_public_keys/` contains the following files:
 
 ```
-alice_id25519.pub
-bob_id25519.pub
-eve@device1_id25519.pub
-eve@device2_id25519.pub
+alice_ed25519.pub
+bob_ed25519.pub
+eve@device1_ed25519.pub
+eve@device2_ed25519.pub
 ```
 
 Alice, Bob and Eve want to be users on this host:
