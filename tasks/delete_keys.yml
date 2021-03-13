@@ -4,10 +4,10 @@
   file:
     state: absent
     path: '/root/.ssh/authorized_keys'
-  changed_when: False
+  changed_when: false
 
 - name: Create .ssh directory for root
-  become: yes
+  become: true
   file:
     path: '/root/.ssh'
     state: directory
@@ -20,8 +20,6 @@
   file:
     state: absent
     path: '/home/ansible/.ssh/authorized_keys'
-  ignore_errors: yes
+  ignore_errors: true
   failed_when: false
-  changed_when: False
-
-
+  changed_when: false

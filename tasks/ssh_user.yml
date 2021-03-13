@@ -6,7 +6,7 @@
     remote_users: '{{ local_user_data.value }}'
 
 - name: 'Setup .ssh for user {{ local_user }}'
-  become: yes
+  become: true
   file:
     path: '/home/{{ local_user }}/.ssh/'
     state: directory
@@ -17,7 +17,7 @@
   changed_when: created_ssh_user_dir.changed and github_users | length == 0
 
 - name: 'Add ssh keys for user {{ local_user }}'
-  become: yes
+  become: true
   template:
     src: authorized_keys.j2
     dest: '/home/{{ local_user }}/.ssh/authorized_keys'

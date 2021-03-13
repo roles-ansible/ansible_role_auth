@@ -1,10 +1,10 @@
 ---
 # Directory where the ssh public keys are stored
-# inside the ansible repository 
+# inside the ansible repository
 ssh_public_key_store: 'ssh_public_keys'
 
 # all admins on this host
-admins: [] 
+admins: []
 
 admins_ssh_root_prefix: "{{ admins }}"
 
