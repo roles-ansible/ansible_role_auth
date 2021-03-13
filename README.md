@@ -8,7 +8,7 @@ It is highly recomended to use this role together with a role to manage users an
 The following roles are tested in combination and work well - at least for the user [DO1JLR](https://github.com/do1jlr):
  - [github.com/chaos-bodensee/role-manage_users](https://github.com/chaos-bodensee/role-manage_users.git)
  - [github.com/chaos-bodensee/role-ssh_authorized_keys](https://github.com/chaos-bodensee/role-ssh_authorized_keys.git) *(this one)*
- - [github.com/chaos-bodensee/role_sshd](https://github.com/chaos-bodensee/role_sshd.git)
+ - [github.com/roles-ansible/ansible_role_sshd](https://github.com/roles-ansible/ansible_role_sshd.git)
 
 ```txt
 Protipp:

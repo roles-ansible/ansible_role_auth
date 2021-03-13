@@ -1,9 +1,10 @@
 ---
-- include_tasks: versioncheck.yml
+- name: run optional versionscheck
+  ansible.builtin.include_tasks: versioncheck.yml
   when: submodules_versioncheck|bool
 
 - name: Setup local users ssh keys
-  include_tasks: ssh_user.yml
+  ansible.builtin.include_tasks: ssh_user.yml
   with_dict: '{{ users }}'
   loop_control:
     loop_var: local_user_data
