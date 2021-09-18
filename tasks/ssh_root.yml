@@ -1,11 +1,11 @@
 ---
 - name: Extract local and remote user names
-  set_fact:
+  ansible.builtin.set_fact:
     local_user: '{{ local_user_data.key }}'
     remote_users: '{{ local_user_data.value }}'
 
 - name: Setup local users ssh keys
-  include_tasks: ssh_root_keys.yml
+  ansible.builtin.include_tasks: ssh_root_keys.yml
   loop: '{{ remote_users }}'
   loop_control:
     loop_var: ssh_user_data

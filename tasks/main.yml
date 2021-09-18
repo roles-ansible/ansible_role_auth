@@ -10,23 +10,24 @@
     loop_var: local_user_data
 
 - name: Setup local users ssh keys from github
-  include_tasks: github_user.yml
+  ansible.builtin.include_tasks: github_user.yml
   with_dict: '{{ github_users }}'
   loop_control:
     loop_var: local_user_data
 
-- include_tasks: delete_keys.yml
+- name: optionally remove existing ssh keys to make sure you there are no wrong keys
+  ansible.builtin.include_tasks: delete_keys.yml
   when: manage_all_keys | bool
 
 - name: Setup ssh keys for admin users
-  include_tasks: ssh_root.yml
+  ansible.builtin.include_tasks: ssh_root.yml
   with_dict: '{{ users }}'
   loop_control:
     loop_var: local_user_data
 
 - name: Set authorized key "{{ item }}" for user root
   become: true
-  authorized_key:
+  ansible.posix,authorized_key:
     user: root
     state: present
     key: "{{ lookup('file', '{{ item }}') }}"

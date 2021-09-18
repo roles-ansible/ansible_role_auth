@@ -1,12 +1,12 @@
 ---
 - name: Extract local and remote user names
-  set_fact:
+  ansible.builtin.set_fact:
     local_user: '{{ local_user_data.key }}'
     remote_users: '{{ local_user_data.value }}'
 
 - name: 'Setup .ssh for user {{ local_user }}'
   become: true
-  file:
+  ansible.builtin.file:
     path: '/home/{{ local_user }}/.ssh/'
     state: directory
     owner: '{{ local_user }}'
@@ -15,7 +15,7 @@
 
 - name: 'Add github ssh keys for user {{ local_user }}'
   become: true
-  authorized_key:
+  ansible.posix.authorized_key:
     user: '{{ local_user }}'
     state: present
     key: 'https://github.com/{{ item }}.keys'
@@ -23,10 +23,9 @@
     - "{{ remote_users }}"
   changed_when: false
 
-
 - name: 'Add github ssh keys for user ansible'
   become: true
-  authorized_key:
+  ansible.posix.authorized_key:
     user: 'ansible'
     state: present
     key: 'https://github.com/{{ item }}.keys'

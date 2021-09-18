@@ -1,14 +1,14 @@
 ---
 - name: delete root ssh keys
   become: true
-  file:
+  ansible.builtin.file:
     state: absent
     path: '/root/.ssh/authorized_keys'
   changed_when: false
 
 - name: Create .ssh directory for root
   become: true
-  file:
+  ansible.builtin.file:
     path: '/root/.ssh'
     state: directory
     owner: root
@@ -17,7 +17,7 @@
 
 - name: delete ansible ssh keys
   become: true
-  file:
+  ansible.builtin.file:
     state: absent
     path: '/home/ansible/.ssh/authorized_keys'
   ignore_errors: true

@@ -1,11 +1,11 @@
 ---
 - name: Find SSH Key store for "{{ ssh_user_data }}"
-  set_fact:
+  ansible.builtin.set_fact:
     keys: "{{ lookup('fileglob', '{{ ssh_public_key_store }}/{{ ssh_user_data }}*_*.pub') }}"
 
 - name: Set authorized key "{{ ssh_user_data }}" for user ansible
   become: true
-  authorized_key:
+  ansible.posix.authorized_key:
     user: ansible
     state: present
     key: "{{ lookup('file', '{{ keys }}') }}"
@@ -13,7 +13,7 @@
 
 - name: Set authorized key "{{ ssh_user_data }}" for user root
   become: true
-  authorized_key:
+  ansible.posix.authorized_key:
     user: root
     state: present
     key: "{{ lookup('file', '{{ keys }}') }}"
@@ -23,7 +23,7 @@
 
 - name: Set authorized key "{{ ssh_user_data }}" for user root
   become: true
-  authorized_key:
+  ansible.posix.authorized_key:
     user: root
     state: present
     key: "{{ lookup('file', '{{ keys }}') }}"
