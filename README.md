@@ -1,21 +1,25 @@
- role ssh_authorized_keys
+[![Ansible Galaxy](https://raw.githubusercontent.com/roles-ansible/ansible_role_auth/main/.github/galaxy.svg?sanitize=true)](https://galaxy.ansible.com/do1jlr/auth) [![MIT License](https://raw.githubusercontent.com/roles-ansible/ansible_role_auth/main/.github/license.svg?sanitize=true)](https://github.com/roles-ansible/ansible_role_auth/blob/main/LICENSE)
+
+ ansible role auth
 ==============================
 Ansible Rolle to manage and deploy ssh keys of admin and non-admin users
 
- combinations
+ intended use
 ---------------
-It is highly recomended to use this role together with a role to manage users and to manage the sshd configuration.<br/>
-The following roles are tested in combination and work well - at least for the user [DO1JLR](https://github.com/do1jlr):
- - [github.com/chaos-bodensee/role-manage_users](https://github.com/chaos-bodensee/role-manage_users.git)
- - [github.com/chaos-bodensee/role-ssh_authorized_keys](https://github.com/chaos-bodensee/role-ssh_authorized_keys.git) *(this one)*
- - [github.com/roles-ansible/ansible_role_sshd](https://github.com/roles-ansible/ansible_role_sshd.git)
+This role is designed to manage linux hosts with the following roles. This role here basically only focuses on deploying the correct ssh public keys to the correct users depending on the configuration.
+Other roles icreating users and groups, configure sshd, roll out dotfiles or install a number of useful packages.
 
-```txt
-Protipp:
+A list of suggested roles to manage your linux host:
+ - [do1jlr.base](https://github.com/roles-ansible/ansible_role_base.git) *install some useful packages*
+ - [do1jlr.users](https://github.com/roles-ansible/ansible_role_users.git) *create user and manage sudoers*
+ - [do1jlr.auth](https://github.com/chaos-bodensee/role-ssh_authorized_keys.git) *(this one)*
+ - [do1jlr.sshd](https://github.com/roles-ansible/ansible_role_sshd.git) *configure sshd*
+ - [do1jlr.dotfiles](https://github.com/roles-ansible/ansible_role_dotfiles) *deploy some fancy dotfiles*
 
-Deploy the manage_users role *before* deploying the ssh keys.
-If the user does not exist it is hard to add a ssh key for him!
-```
+ Good to know:
+---------------
+The listed roles use the same variables to create accounts, admins and so on. But the roles have to run in the correct order to work properly.
+For example you can't deploy a ssh public key for a user that is not created.
 
  Variables
 ---------

@@ -20,8 +20,8 @@ accounts: []
 # SSH Login Warning
 ssh_root_login_warning: 'Please login as your own user rather than the user \"root\".'
 
-# should we check the role version to prevent stupid users with outdated roles?
-submodules_versioncheck: true
+# create optional versionscheck (true is recomended)
+submodules_versioncheck: false
 
 # restrict login as root
 restict_ssh_root_access: true
