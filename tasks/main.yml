@@ -25,7 +25,7 @@
   loop_control:
     loop_var: local_user_data
 
-- name: Set authorized key "{{ item }}" for user root
+- name: Set authorized keys from admins for user root
   become: true
   ansible.posix.authorized_key:
     user: root
