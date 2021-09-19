@@ -27,7 +27,7 @@
 
 - name: Set authorized key "{{ item }}" for user root
   become: true
-  ansible.posix,authorized_key:
+  ansible.posix.authorized_key:
     user: root
     state: present
     key: "{{ lookup('file', '{{ item }}') }}"
