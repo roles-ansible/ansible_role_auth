@@ -2,6 +2,7 @@
 - name: Find SSH Key store for user
   ansible.builtin.set_fact:
     keys: "{{ lookup('fileglob', '{{ ssh_public_key_store }}/{{ ssh_user_data }}*_*.pub') }}"
+  tags: ['skip_ansible_lint']
 
 - name: "Set authorized key {{ ssh_user_data }} for user ansible"
   become: true
@@ -10,6 +11,7 @@
     state: present
     key: "{{ lookup('file', '{{ keys }}') }}"
   changed_when: false
+  tags: ['skip_ansible_lint']
 
 - name: "Set authorized key {{ ssh_user_data }} for user root"
   become: true
@@ -20,6 +22,7 @@
     key_options: "no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command=\"echo '{{ ssh_root_login_warning }}';echo;sleep 10\""
   when: restict_ssh_root_access | bool
   changed_when: false
+  tags: ['skip_ansible_lint']
 
 - name: "Set authorized key {{ ssh_user_data }} for user root"
   become: true
@@ -29,3 +32,4 @@
     key: "{{ lookup('file', '{{ keys }}') }}"
   changed_when: false
   when: not restict_ssh_root_access | bool
+  tags: ['skip_ansible_lint']

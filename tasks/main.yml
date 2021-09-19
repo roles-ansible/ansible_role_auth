@@ -33,3 +33,4 @@
     key: "{{ lookup('file', '{{ item }}') }}"
   when: grant_special_ssh_root_access | bool
   with_items: "{{ root_ssh_keys }}"
+  tags: ['skip_ansible_lint']
