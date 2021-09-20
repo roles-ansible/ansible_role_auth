@@ -12,7 +12,7 @@ Other roles icreating users and groups, configure sshd, roll out dotfiles or ins
 A list of suggested roles to manage your linux host:
  - [do1jlr.base](https://github.com/roles-ansible/ansible_role_base.git) *install some useful packages*
  - [do1jlr.users](https://github.com/roles-ansible/ansible_role_users.git) *create user and manage sudoers*
- - [do1jlr.auth](https://github.com/chaos-bodensee/role-ssh_authorized_keys.git) *(this one)*
+ - [do1jlr.auth](https://github.com/roles-ansible/ansible_role_auth.git) *(this one)*
  - [do1jlr.sshd](https://github.com/roles-ansible/ansible_role_sshd.git) *configure sshd*
  - [do1jlr.dotfiles](https://github.com/roles-ansible/ansible_role_dotfiles) *deploy some fancy dotfiles*
 
